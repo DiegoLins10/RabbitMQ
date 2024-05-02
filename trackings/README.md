@@ -1,4 +1,4 @@
-# DevTrackR - Mini-curso Microsserviços com ASP.NET Core
+# Microservices - Sistema de mensageria
 
 Está sendo desenvolvido um sistema utilizando arquitetura de microsserviços, implementando funcionalidades relacionadas a envio de pacotes.
 
