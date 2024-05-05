@@ -21,6 +21,7 @@ namespace DevTrackR.ShippingOrders.Infrastructure
 
         public static IServiceCollection AddMongo(this IServiceCollection services)
         {
+            // popula as configurações do appsettings
             services.AddSingleton(sp =>
             {
                 var configuration = sp.GetService<IConfiguration>();
@@ -31,14 +32,24 @@ namespace DevTrackR.ShippingOrders.Infrastructure
                 return options;
             });
 
+            // configura a conexao com as configurações
             services.AddSingleton<IMongoClient>(sp =>
             {
                 var configuration = sp.GetService<IConfiguration>();
                 var options = sp.GetService<MongoDbOptions>();
 
-                return new MongoClient(options.ConnectionString);
+                // password e username passar direto na connectionstring
+                var client = new MongoClient(options.ConnectionString);
+                var db = client.GetDatabase(options.Database);
+
+                var dbSeed = new DbSeed(db);
+                dbSeed.Populate();
+
+                return client;
+
             });
 
+            // cria a conexão utilizando o mongo client
             services.AddTransient(
                 sp =>
             {
