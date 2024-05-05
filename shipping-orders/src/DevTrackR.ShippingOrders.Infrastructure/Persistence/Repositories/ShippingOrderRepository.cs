@@ -6,7 +6,6 @@ namespace DevTrackR.ShippingOrders.Infrastructure.Persistence.Repositories
 {
     public class ShippingOrderRepository : IShippingOrderRepository
     {
-
         private readonly IMongoCollection<ShippingOrder> _collection;
 
         public ShippingOrderRepository(IMongoDatabase database)
@@ -14,14 +13,14 @@ namespace DevTrackR.ShippingOrders.Infrastructure.Persistence.Repositories
             _collection = database.GetCollection<ShippingOrder>("shipping-orders");
         }
 
-        public Task AddAsync(ShippingOrder shippingOrder)
+        public async Task AddAsync(ShippingOrder shippingOrder)
         {
-            throw new NotImplementedException();
+            await _collection.InsertOneAsync(shippingOrder);
         }
 
-        public Task<ShippingOrder> GetByCodeAsync(string code)
+        public async Task<ShippingOrder> GetByCodeAsync(string code)
         {
-            throw new NotImplementedException();
+            return await _collection.Find(d => d.TrackingCode == code).SingleOrDefaultAsync();
         }
     }
 }
