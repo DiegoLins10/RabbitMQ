@@ -19,4 +19,6 @@ Está sendo desenvolvido um sistema utilizando arquitetura de microsserviços, i
 
 ## Shipping Orders
 
-![](https://github.com/DiegoLins10/RabbitMQ/blob/main/ResultShippingServices.png)
+![](https://github.com/DiegoLins10/RabbitMQ/blob/main/shipping-orders/SwaggerShipping.png)
+
+![](https://github.com/DiegoLins10/RabbitMQ/blob/main/shipping-orders/SwaggerShipping.png)
