@@ -1,13 +1,10 @@
-﻿using DevTrackR.ShippingOrders.Infrastructure.Persistence;
+﻿using DevTrackR.ShippingOrders.Core.Repositories;
+using DevTrackR.ShippingOrders.Infrastructure.Persistence;
+using DevTrackR.ShippingOrders.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DevTrackR.ShippingOrders.Infrastructure
 {
@@ -16,7 +13,8 @@ namespace DevTrackR.ShippingOrders.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services
-                .AddMongo();
+                .AddMongo()
+                .AddRepositories();
 
             return services;
         }
@@ -54,6 +52,13 @@ namespace DevTrackR.ShippingOrders.Infrastructure
                 return db;
             });
 
+            return services;
+        }
+
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IShippingOrderRepository, ShippingOrderRepository>();
+            services.AddScoped<IShippingServiceRepository, ShippingServiceRepository>();
             return services;
         }
     }
