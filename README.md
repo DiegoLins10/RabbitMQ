@@ -15,3 +15,8 @@ Está sendo desenvolvido um sistema utilizando arquitetura de microsserviços, i
 - Cadastro e Detalhes de Pacote
 - Cadastro de Atualização de Pacote
 - Notificação por E-mail
+
+
+## Shipping Orders
+
+![](https://github.com/DiegoLins10/RabbitMQ/blob/main/ResultShippingServices.png)
