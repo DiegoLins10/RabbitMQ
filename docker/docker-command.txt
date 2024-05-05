@@ -1,0 +1,12 @@
+criar instancia:
+docker-compose up + Arquivo docker-compose.yml
+
+acessar mongo
+docker exec -it mongo-test bash
+
+autenticar mongo db:
+mongosh --username root --password example 
+
+
+basic commands docker
+https://blog.e-zest.com/basic-commands-for-mongodb
