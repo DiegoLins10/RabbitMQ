@@ -1,18 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using DevTrackR.ShippingOrders.Application.InputModels;
 using DevTrackR.ShippingOrders.Application.ViewModels;
-using DevTrackR.ShippingOrders.Core.Entities;
-using DevTrackR.ShippingOrders.Core.ValueObjects;
+using DevTrackR.ShippingOrders.Core.Repositories;
+using System.Text.Json;
 
 namespace DevTrackR.ShippingOrders.Application.Services
 {
     public class ShippingOrderService : IShippingOrderService
     {
-        public Task<string> Add(AddShippingOrderInputModel model)
+        private readonly IShippingOrderRepository _shippingOrderRepository;
+
+        public ShippingOrderService(IShippingOrderRepository repository)
+        {
+            _shippingOrderRepository = repository;
+        }
+
+        public async Task<string> Add(AddShippingOrderInputModel model)
         {
             var shippingOrder = model.ToEntity();
             var shippingServices = model
@@ -24,20 +26,16 @@ namespace DevTrackR.ShippingOrders.Application.Services
 
             Console.WriteLine(JsonSerializer.Serialize(shippingOrder));
 
-            return Task.FromResult(shippingOrder.TrackingCode);
+            await _shippingOrderRepository.AddAsync(shippingOrder);
+
+            return shippingOrder.TrackingCode;
         }
 
-        public Task<ShippingOrderViewModel> GetByCode(string trackingCode)
+        public async Task<ShippingOrderViewModel> GetByCode(string trackingCode)
         {
-            var shippingOrder = new ShippingOrder(
-                "Pedido 1",
-                1.3m,
-                new DeliveryAddress("Rua A", "1A", "12345-678", "São Paulo", "SP", "Brasil")
-            );
+            var shippingOrder = await _shippingOrderRepository.GetByCodeAsync(trackingCode);
 
-            return Task.FromResult(
-                ShippingOrderViewModel.FromEntity(shippingOrder)
-            );
+            return ShippingOrderViewModel.FromEntity(shippingOrder);
         }
     }
 }
