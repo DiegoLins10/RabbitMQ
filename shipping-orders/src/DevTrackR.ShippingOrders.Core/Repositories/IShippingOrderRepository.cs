@@ -6,5 +6,7 @@ namespace DevTrackR.ShippingOrders.Core.Repositories
     {
         Task<ShippingOrder> GetByCodeAsync(string code);
         Task AddAsync(ShippingOrder shippingOrder);
+        Task UpdateAsync(ShippingOrder shippingOrder);
+
     }
 }

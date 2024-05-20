@@ -22,5 +22,11 @@ namespace DevTrackR.ShippingOrders.Infrastructure.Persistence.Repositories
         {
             return await _collection.Find(d => d.TrackingCode == code).SingleOrDefaultAsync();
         }
+
+        public async Task UpdateAsync(ShippingOrder shippingOrder)
+        {
+            await _collection
+                .ReplaceOneAsync(so => so.TrackingCode == shippingOrder.TrackingCode, shippingOrder);
+        }
     }
 }
