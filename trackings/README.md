@@ -1,9 +1,9 @@
-# Microservices - Sistema de mensageria
+# DevTrackR - Curso Microsserviços com ASP.NET Core
 
 Está sendo desenvolvido um sistema utilizando arquitetura de microsserviços, implementando funcionalidades relacionadas a envio de pacotes.
 
 ## Tecnologias e práticas utilizadas
-- ASP.NET Core com .NET 6
+- ASP.NET Core com .NET 7
 - MongoDB
 - Swagger
 - Injeção de Dependência
