@@ -34,7 +34,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: shipping-orders/src/DevTrackR.ShippingOrders.API
       
-  build-back:
+  build-rabbit:
 
     runs-on: ubuntu-latest
 
