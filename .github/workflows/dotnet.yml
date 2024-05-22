@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-shipping:
 
     runs-on: ubuntu-latest
 
@@ -33,3 +33,29 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: shipping-orders/src/DevTrackR.ShippingOrders.API
+      
+  build-back:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: trackings/src/DevTrackR.Tracking.API
+
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: trackings/src/DevTrackR.Tracking.API
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: trackings/src/DevTrackR.Tracking.API
+
+    
