@@ -23,3 +23,5 @@ docker run -it --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-managem
 ```
 
 Com esta alteração, o contêiner RabbitMQ será mantido após ser parado. Você pode pará-lo manualmente usando o comando `docker stop rabbitmq`, e ele ainda estará disponível no Docker Desktop até ser removido explicitamente com o comando `docker rm rabbitmq`.
+
+db.getCollection('shipping-orders').find()
