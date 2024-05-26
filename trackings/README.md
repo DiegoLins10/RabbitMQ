@@ -17,6 +17,7 @@ Está sendo desenvolvido um sistema utilizando arquitetura de microsserviços, i
 - Notificação por E-mail
 
 
+## Como funciona rabbitMq
 
 No RabbitMQ, um **exchange** é responsável por roteamento de mensagens para uma ou mais filas (queues). O mecanismo de roteamento depende do tipo de exchange e da chave de roteamento (routing key) fornecida com a mensagem. Aqui está uma visão geral de como exchanges e chaves de roteamento funcionam no RabbitMQ:
 
@@ -59,27 +60,49 @@ No RabbitMQ, um **exchange** é responsável por roteamento de mensagens para um
 
 Vamos criar um exemplo onde uma mensagem é enviada para uma fila específica usando um direct exchange:
 
-```python
-import pika
+```csharp
+using System;
+using RabbitMQ.Client;
+using System.Text;
 
-# Conexão com o servidor RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-channel = connection.channel()
+class Send
+{
+    public static void Main()
+    {
+        // Conectar ao servidor RabbitMQ
+        var factory = new ConnectionFactory() { HostName = "localhost" };
+        using(var connection = factory.CreateConnection())
+        using(var channel = connection.CreateModel())
+        {
+            // Declaração do exchange
+            channel.ExchangeDeclare(exchange: "meu_direct_exchange", type: "direct");
 
-# Declaração do exchange
-channel.exchange_declare(exchange='meu_direct_exchange', exchange_type='direct')
+            // Declaração da fila
+            channel.QueueDeclare(queue: "minha_fila",
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
 
-# Declaração da fila
-channel.queue_declare(queue='minha_fila')
+            // Ligação da fila ao exchange com a chave de roteamento
+            channel.QueueBind(queue: "minha_fila",
+                              exchange: "meu_direct_exchange",
+                              routingKey: "minha.chave.de.roteamento");
 
-# Ligação da fila ao exchange com uma chave de roteamento
-channel.queue_bind(exchange='meu_direct_exchange', queue='minha_fila', routing_key='minha.chave.de.roteamento')
+            // Mensagem a ser enviada
+            string mensagem = "Olá, Mundo!";
+            var body = Encoding.UTF8.GetBytes(mensagem);
 
-# Envio de uma mensagem
-channel.basic_publish(exchange='meu_direct_exchange', routing_key='minha.chave.de.roteamento', body='Olá, Mundo!')
+            // Envio da mensagem
+            channel.BasicPublish(exchange: "meu_direct_exchange",
+                                 routingKey: "minha.chave.de.roteamento",
+                                 basicProperties: null,
+                                 body: body);
 
-# Fechamento da conexão
-connection.close()
+            Console.WriteLine(" [x] Enviado {0}", mensagem);
+        }
+    }
+}
 ```
 
 Neste exemplo:
