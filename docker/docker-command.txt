@@ -10,3 +10,16 @@ mongosh --username root --password example
 
 basic commands docker
 https://blog.e-zest.com/basic-commands-for-mongodb
+
+
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+
+O comando que você forneceu está configurando o contêiner RabbitMQ com a opção `--rm`, o que significa que o contêiner será removido automaticamente quando for parado. Isso é útil para contêineres temporários que você não deseja manter após o uso, mas não é adequado se você deseja manter o contêiner RabbitMQ em execução mesmo após pará-lo.
+
+Para manter o contêiner RabbitMQ em execução mesmo após pará-lo, basta remover a opção `--rm` do comando. Aqui está o comando corrigido:
+
+```bash
+docker run -it --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+```
+
+Com esta alteração, o contêiner RabbitMQ será mantido após ser parado. Você pode pará-lo manualmente usando o comando `docker stop rabbitmq`, e ele ainda estará disponível no Docker Desktop até ser removido explicitamente com o comando `docker rm rabbitmq`.

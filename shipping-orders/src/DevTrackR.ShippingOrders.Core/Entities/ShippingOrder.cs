@@ -52,5 +52,10 @@ namespace DevTrackR.ShippingOrders.Core.Entities
 
             return new String(code);
         }
+
+        public void SetCompleted()
+        {
+            Status = ShippingOrderStatus.Delivered;
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace DevTrackR.Tracking.Infrastructure.Messaging
         public RabbitMqService()
         {
             var connectionFactory = new ConnectionFactory {
-                HostName = "localhost"
+                HostName = "localhost",
             };
 
             _connection = connectionFactory.CreateConnection("trackings-service-publisher");

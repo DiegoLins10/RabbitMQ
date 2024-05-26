@@ -32,7 +32,9 @@ namespace DevTrackR.Notifications.API.Infrastructure
 
             message.AddTo(template.To);
 
-            await _client.SendEmailAsync(message);
+            var result = await _client.SendEmailAsync(message);
+
+            Console.WriteLine(result);
         }
     }
 }

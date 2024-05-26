@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using DevTrackR.ShippingOrders.Application.Services;
+using DevTrackR.ShippingOrders.Applicaton.Subscribers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DevTrackR.ShippingOrders.Application
@@ -11,7 +14,8 @@ namespace DevTrackR.ShippingOrders.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services) {
             services
-                .AddApplicationServices();
+                .AddApplicationServices()
+                .AddSubscribers();
 
             return services;
         }
@@ -19,6 +23,13 @@ namespace DevTrackR.ShippingOrders.Application
         private static IServiceCollection AddApplicationServices(this IServiceCollection services) {
             services.AddScoped<IShippingOrderService, ShippingOrderService>();
             services.AddScoped<IShippingServiceService, ShippingServiceService>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddSubscribers(this IServiceCollection services)
+        {
+            services.AddHostedService<ShippingOrderCompletedSubscriber>();
 
             return services;
         }
