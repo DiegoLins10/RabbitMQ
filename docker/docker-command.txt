@@ -10,3 +10,5 @@ mongosh --username root --password example
 
 basic commands docker
 https://blog.e-zest.com/basic-commands-for-mongodb
+
+db.getCollection('shipping-orders').find()
