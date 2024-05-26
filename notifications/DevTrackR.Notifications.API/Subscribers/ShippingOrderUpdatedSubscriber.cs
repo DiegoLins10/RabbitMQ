@@ -27,6 +27,7 @@ namespace DevTrackR.Notifications.API.Subscribers
  
             _channel = _connection.CreateModel();
  
+            // exchange, type, durable, autodelete
             _channel.ExchangeDeclare(TrackingsExchange, "topic", true, false);
  
             _channel.QueueDeclare(
