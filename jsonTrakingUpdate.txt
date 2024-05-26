@@ -1,0 +1,6 @@
+{
+  "trackingCode": "VHYCV60570",
+  "description": "Saindo de curitiba para sao paulo",
+  "isShippingCompleted": false,
+  "contactEmail": "diegofernandeslins@gmail.com"
+}
